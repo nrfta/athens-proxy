@@ -186,6 +186,7 @@ func TestStorageEnvOverrides(t *testing.T) {
 			Secret: "s3Secret",
 			Token:  "s3Token",
 			Bucket: "s3Bucket",
+			Prefix: "s3Prefix",
 		},
 	}
 	envVars := getEnvMap(&Config{Storage: expStorage})
@@ -233,6 +234,7 @@ func TestParseExampleConfig(t *testing.T) {
 			Secret: "MY_AWS_SECRET_ACCESS_KEY",
 			Token:  "",
 			Bucket: "MY_S3_BUCKET_NAME",
+			Prefix: "MY_S3_PREFIX",
 		},
 		AzureBlob: &AzureBlobConfig{
 			AccountName:               "MY_AZURE_BLOB_ACCOUNT_NAME",
@@ -367,6 +369,7 @@ func getEnvMap(config *Config) map[string]string {
 			envVars["AWS_SESSION_TOKEN"] = storage.S3.Token
 			envVars["AWS_FORCE_PATH_STYLE"] = strconv.FormatBool(storage.S3.ForcePathStyle)
 			envVars["ATHENS_S3_BUCKET_NAME"] = storage.S3.Bucket
+			envVars["ATHENS_S3_PREFIX"] = storage.S3.Prefix
 		}
 	}
 

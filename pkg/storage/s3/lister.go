@@ -8,6 +8,7 @@ import (
 	"github.com/aws/aws-sdk-go-v2/aws"
 	"github.com/aws/aws-sdk-go-v2/service/s3"
 	"github.com/aws/aws-sdk-go-v2/service/s3/types"
+
 	"github.com/gomods/athens/pkg/errors"
 	"github.com/gomods/athens/pkg/observ"
 )
@@ -19,7 +20,7 @@ func (s *Storage) List(ctx context.Context, module string) ([]string, error) {
 	ctx, span := observ.StartSpan(ctx, op.String())
 	defer span.End()
 
-	modulePrefix := strings.TrimSuffix(module, "/") + "/@v"
+	modulePrefix := s.prefix + strings.TrimSuffix(module, "/") + "/@v"
 
 	lsParams := &s3.ListObjectsV2Input{
 		Bucket: aws.String(s.bucket),

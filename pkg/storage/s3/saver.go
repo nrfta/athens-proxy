@@ -7,6 +7,7 @@ import (
 
 	"github.com/aws/aws-sdk-go-v2/aws"
 	"github.com/aws/aws-sdk-go-v2/service/s3"
+
 	"github.com/gomods/athens/pkg/errors"
 	"github.com/gomods/athens/pkg/observ"
 	moduploader "github.com/gomods/athens/pkg/storage/module"
@@ -34,7 +35,7 @@ func (s *Storage) upload(ctx context.Context, path, contentType string, stream i
 
 	upParams := &s3.PutObjectInput{
 		Bucket:      aws.String(s.bucket),
-		Key:         aws.String(path),
+		Key:         aws.String(s.prefix + path),
 		Body:        stream,
 		ContentType: aws.String(contentType),
 	}

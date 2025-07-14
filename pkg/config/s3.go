@@ -7,6 +7,7 @@ type S3Config struct {
 	Secret                             string `envconfig:"AWS_SECRET_ACCESS_KEY"`
 	Token                              string `envconfig:"AWS_SESSION_TOKEN"`
 	Bucket                             string `envconfig:"ATHENS_S3_BUCKET_NAME"                  validate:"required"`
+	Prefix                             string `envconfig:"ATHENS_S3_PREFIX"`
 	UseDefaultConfiguration            bool   `envconfig:"AWS_USE_DEFAULT_CONFIGURATION"`
 	ForcePathStyle                     bool   `envconfig:"AWS_FORCE_PATH_STYLE"`
 	CredentialsEndpoint                string `envconfig:"AWS_CREDENTIALS_ENDPOINT"`

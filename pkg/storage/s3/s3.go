@@ -3,6 +3,7 @@ package s3
 import (
 	"context"
 	"fmt"
+	"strings"
 	"time"
 
 	"github.com/aws/aws-sdk-go-v2/aws"
@@ -11,6 +12,7 @@ import (
 	"github.com/aws/aws-sdk-go-v2/credentials/endpointcreds"
 	"github.com/aws/aws-sdk-go-v2/feature/s3/manager"
 	"github.com/aws/aws-sdk-go-v2/service/s3"
+
 	"github.com/gomods/athens/pkg/config"
 	"github.com/gomods/athens/pkg/errors"
 )
@@ -26,6 +28,7 @@ import (
 // For information how to get your keyId and access key turn to official aws docs: https://docs.aws.amazon.com/sdk-for-go/v1/developer-guide/setting-up.html.
 type Storage struct {
 	bucket   string
+	prefix   string
 	uploader *manager.Uploader
 	s3API    *s3.Client
 	timeout  time.Duration
@@ -65,8 +68,14 @@ func New(s3Conf *config.S3Config, timeout time.Duration, options ...func(*aws.Co
 
 	uploader := manager.NewUploader(sess)
 
+	prefix := strings.TrimLeft(s3Conf.Prefix, "/")
+	if prefix != "" && !strings.HasSuffix(prefix, "/") {
+		prefix += "/"
+	}
+
 	return &Storage{
 		bucket:   s3Conf.Bucket,
+		prefix:   prefix,
 		uploader: uploader,
 		s3API:    sess,
 		timeout:  timeout,

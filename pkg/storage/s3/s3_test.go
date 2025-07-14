@@ -8,10 +8,12 @@ import (
 
 	"github.com/aws/aws-sdk-go-v2/service/s3/types"
 	"github.com/aws/smithy-go"
+
 	"github.com/gomods/athens/pkg/errors"
 
 	"github.com/aws/aws-sdk-go-v2/aws"
 	"github.com/aws/aws-sdk-go-v2/service/s3"
+
 	"github.com/gomods/athens/pkg/config"
 	"github.com/gomods/athens/pkg/storage/compliance"
 )
@@ -90,6 +92,7 @@ func getStorage(t testing.TB) *Storage {
 			Key:            "minio",
 			Secret:         "minio123",
 			Bucket:         "gomodsaws",
+			Prefix:         "gomods",
 			Region:         "us-west-1",
 			ForcePathStyle: true,
 		},

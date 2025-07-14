@@ -7,6 +7,7 @@ import (
 	"github.com/aws/aws-sdk-go-v2/aws"
 	"github.com/aws/aws-sdk-go-v2/service/s3"
 	"github.com/aws/smithy-go"
+
 	"github.com/gomods/athens/pkg/config"
 	"github.com/gomods/athens/pkg/errors"
 	"github.com/gomods/athens/pkg/observ"
@@ -32,7 +33,7 @@ func (s *Storage) Exists(ctx context.Context, module, version string) (bool, err
 				cancelingCtx,
 				&s3.HeadObjectInput{
 					Bucket: aws.String(s.bucket),
-					Key:    aws.String(config.PackageVersionedName(module, version, file)),
+					Key:    aws.String(s.prefix + config.PackageVersionedName(module, version, file)),
 				})
 			errChan <- err
 		}(file)

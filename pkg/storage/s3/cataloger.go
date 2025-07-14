@@ -8,6 +8,7 @@ import (
 	"github.com/aws/aws-sdk-go-v2/aws"
 	"github.com/aws/aws-sdk-go-v2/service/s3"
 	"github.com/aws/aws-sdk-go-v2/service/s3/types"
+
 	"github.com/gomods/athens/pkg/config"
 	"github.com/gomods/athens/pkg/errors"
 	"github.com/gomods/athens/pkg/observ"
@@ -27,6 +28,9 @@ func (s *Storage) Catalog(ctx context.Context, token string, pageSize int) ([]pa
 		lsParams := &s3.ListObjectsV2Input{
 			Bucket:     aws.String(s.bucket),
 			StartAfter: &queryToken,
+		}
+		if s.prefix != "" {
+			lsParams.Prefix = aws.String(s.prefix)
 		}
 
 		loo, err := s.s3API.ListObjectsV2(ctx, lsParams)
